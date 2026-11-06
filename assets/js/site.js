@@ -118,6 +118,28 @@
             '<small>Inovação • Educação • Tecnologia<br>© ' + new Date().getFullYear() + ' Pixel-3D — IFSULDEMINAS Campus Machado</small></div>';
     }
 
+    var backToTop = document.createElement('button');
+    backToTop.className = 'back-to-top';
+    backToTop.type = 'button';
+    backToTop.setAttribute('aria-label', 'Voltar ao topo');
+    backToTop.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5m-7 7 7-7 7 7"/></svg>';
+    backToTop.setAttribute('aria-hidden', 'true');
+    backToTop.tabIndex = -1;
+    document.body.appendChild(backToTop);
+    function updateBackToTop() {
+        var visible = window.scrollY >= 400;
+        backToTop.classList.toggle('is-visible', visible);
+        backToTop.setAttribute('aria-hidden', !visible);
+        backToTop.tabIndex = visible ? 0 : -1;
+    }
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    backToTop.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+        });
+    });
+
     // Grades de cards com filtro
     document.querySelectorAll('[data-grid]').forEach(function (box) {
         var items = DATA[box.dataset.grid] || [], limit = +box.dataset.limit || items.length;
